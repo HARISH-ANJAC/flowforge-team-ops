@@ -14,6 +14,9 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as EmployeeRouteImport } from './routes/employee'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SupervisorRouteImport } from './routes/supervisor'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminJobsIndexRouteImport } from './routes/admin.jobs.index'
+import { Route as AdminJobsNewRouteImport } from './routes/admin.jobs.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,40 +43,89 @@ const SupervisorRoute = SupervisorRouteImport.update({
   path: '/supervisor',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminJobsIndexRoute = AdminJobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminJobsNewRoute = AdminJobsNewRouteImport.update({
+  id: '/jobs/new',
+  path: '/jobs/new',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/employee': typeof EmployeeRoute
   '/login': typeof LoginRoute
   '/supervisor': typeof SupervisorRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/jobs/new': typeof AdminJobsNewRoute
+  '/admin/jobs/': typeof AdminJobsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/employee': typeof EmployeeRoute
   '/login': typeof LoginRoute
   '/supervisor': typeof SupervisorRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/jobs/new': typeof AdminJobsNewRoute
+  '/admin/jobs': typeof AdminJobsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/employee': typeof EmployeeRoute
   '/login': typeof LoginRoute
   '/supervisor': typeof SupervisorRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/jobs/new': typeof AdminJobsNewRoute
+  '/admin/jobs/': typeof AdminJobsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/employee' | '/login' | '/supervisor'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/employee'
+    | '/login'
+    | '/supervisor'
+    | '/admin/dashboard'
+    | '/admin/jobs/new'
+    | '/admin/jobs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/employee' | '/login' | '/supervisor'
-  id: '__root__' | '/' | '/admin' | '/employee' | '/login' | '/supervisor'
+  to:
+    | '/'
+    | '/admin'
+    | '/employee'
+    | '/login'
+    | '/supervisor'
+    | '/admin/dashboard'
+    | '/admin/jobs/new'
+    | '/admin/jobs'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/employee'
+    | '/login'
+    | '/supervisor'
+    | '/admin/dashboard'
+    | '/admin/jobs/new'
+    | '/admin/jobs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
   EmployeeRoute: typeof EmployeeRoute
   LoginRoute: typeof LoginRoute
   SupervisorRoute: typeof SupervisorRoute
@@ -116,12 +168,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SupervisorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/jobs/': {
+      id: '/admin/jobs/'
+      path: '/jobs'
+      fullPath: '/admin/jobs/'
+      preLoaderRoute: typeof AdminJobsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/jobs/new': {
+      id: '/admin/jobs/new'
+      path: '/jobs/new'
+      fullPath: '/admin/jobs/new'
+      preLoaderRoute: typeof AdminJobsNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminJobsNewRoute: typeof AdminJobsNewRoute
+  AdminJobsIndexRoute: typeof AdminJobsIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminJobsNewRoute: AdminJobsNewRoute,
+  AdminJobsIndexRoute: AdminJobsIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
   EmployeeRoute: EmployeeRoute,
   LoginRoute: LoginRoute,
   SupervisorRoute: SupervisorRoute,
