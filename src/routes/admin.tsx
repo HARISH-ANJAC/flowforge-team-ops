@@ -1,7 +1,8 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { AppShell } from "@/components/shell";
+import type { Role } from "@/lib/data";
 
-const allow = ["Admin", "Supervisor"] as const;
+const ALLOW: Role[] = ["Admin", "Supervisor"];
 export const Route = createFileRoute("/admin")({
-  component: () => <AppShell allow={[...allow]}><Outlet /></AppShell>,
+  component: () => <AppShell allow={ALLOW}><Outlet /></AppShell>,
 });
