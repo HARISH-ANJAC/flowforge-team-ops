@@ -14,10 +14,15 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as EmployeeRouteImport } from './routes/employee'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SupervisorRouteImport } from './routes/supervisor'
+import { Route as AdminActivityRouteImport } from './routes/admin.activity'
+import { Route as AdminApprovalsRouteImport } from './routes/admin.approvals'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminDepartmentsRouteImport } from './routes/admin.departments'
 import { Route as AdminEmployeesRouteImport } from './routes/admin.employees'
 import { Route as AdminProductionRouteImport } from './routes/admin.production'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
 import { Route as AdminWorkflowsRouteImport } from './routes/admin.workflows'
 import { Route as AdminJobsIndexRouteImport } from './routes/admin.jobs.index'
 import { Route as AdminJobsJobIdRouteImport } from './routes/admin.jobs.$jobId'
@@ -48,6 +53,16 @@ const SupervisorRoute = SupervisorRouteImport.update({
   path: '/supervisor',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminActivityRoute = AdminActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminApprovalsRoute = AdminApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -66,6 +81,21 @@ const AdminEmployeesRoute = AdminEmployeesRouteImport.update({
 const AdminProductionRoute = AdminProductionRouteImport.update({
   id: '/production',
   path: '/production',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTasksRoute = AdminTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminWorkflowsRoute = AdminWorkflowsRouteImport.update({
@@ -95,10 +125,15 @@ export interface FileRoutesByFullPath {
   '/employee': typeof EmployeeRoute
   '/login': typeof LoginRoute
   '/supervisor': typeof SupervisorRoute
+  '/admin/activity': typeof AdminActivityRoute
+  '/admin/approvals': typeof AdminApprovalsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/departments': typeof AdminDepartmentsRoute
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/production': typeof AdminProductionRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/admin/workflows': typeof AdminWorkflowsRoute
   '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
   '/admin/jobs/new': typeof AdminJobsNewRoute
@@ -110,10 +145,15 @@ export interface FileRoutesByTo {
   '/employee': typeof EmployeeRoute
   '/login': typeof LoginRoute
   '/supervisor': typeof SupervisorRoute
+  '/admin/activity': typeof AdminActivityRoute
+  '/admin/approvals': typeof AdminApprovalsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/departments': typeof AdminDepartmentsRoute
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/production': typeof AdminProductionRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/admin/workflows': typeof AdminWorkflowsRoute
   '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
   '/admin/jobs/new': typeof AdminJobsNewRoute
@@ -126,10 +166,15 @@ export interface FileRoutesById {
   '/employee': typeof EmployeeRoute
   '/login': typeof LoginRoute
   '/supervisor': typeof SupervisorRoute
+  '/admin/activity': typeof AdminActivityRoute
+  '/admin/approvals': typeof AdminApprovalsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/departments': typeof AdminDepartmentsRoute
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/production': typeof AdminProductionRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/admin/workflows': typeof AdminWorkflowsRoute
   '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
   '/admin/jobs/new': typeof AdminJobsNewRoute
@@ -143,10 +188,15 @@ export interface FileRouteTypes {
     | '/employee'
     | '/login'
     | '/supervisor'
+    | '/admin/activity'
+    | '/admin/approvals'
     | '/admin/dashboard'
     | '/admin/departments'
     | '/admin/employees'
     | '/admin/production'
+    | '/admin/reports'
+    | '/admin/settings'
+    | '/admin/tasks'
     | '/admin/workflows'
     | '/admin/jobs/$jobId'
     | '/admin/jobs/new'
@@ -158,10 +208,15 @@ export interface FileRouteTypes {
     | '/employee'
     | '/login'
     | '/supervisor'
+    | '/admin/activity'
+    | '/admin/approvals'
     | '/admin/dashboard'
     | '/admin/departments'
     | '/admin/employees'
     | '/admin/production'
+    | '/admin/reports'
+    | '/admin/settings'
+    | '/admin/tasks'
     | '/admin/workflows'
     | '/admin/jobs/$jobId'
     | '/admin/jobs/new'
@@ -173,10 +228,15 @@ export interface FileRouteTypes {
     | '/employee'
     | '/login'
     | '/supervisor'
+    | '/admin/activity'
+    | '/admin/approvals'
     | '/admin/dashboard'
     | '/admin/departments'
     | '/admin/employees'
     | '/admin/production'
+    | '/admin/reports'
+    | '/admin/settings'
+    | '/admin/tasks'
     | '/admin/workflows'
     | '/admin/jobs/$jobId'
     | '/admin/jobs/new'
@@ -228,6 +288,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SupervisorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/activity': {
+      id: '/admin/activity'
+      path: '/activity'
+      fullPath: '/admin/activity'
+      preLoaderRoute: typeof AdminActivityRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/approvals': {
+      id: '/admin/approvals'
+      path: '/approvals'
+      fullPath: '/admin/approvals'
+      preLoaderRoute: typeof AdminApprovalsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/dashboard'
@@ -254,6 +328,27 @@ declare module '@tanstack/react-router' {
       path: '/production'
       fullPath: '/admin/production'
       preLoaderRoute: typeof AdminProductionRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/tasks': {
+      id: '/admin/tasks'
+      path: '/tasks'
+      fullPath: '/admin/tasks'
+      preLoaderRoute: typeof AdminTasksRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/workflows': {
@@ -288,10 +383,15 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminActivityRoute: typeof AdminActivityRoute
+  AdminApprovalsRoute: typeof AdminApprovalsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDepartmentsRoute: typeof AdminDepartmentsRoute
   AdminEmployeesRoute: typeof AdminEmployeesRoute
   AdminProductionRoute: typeof AdminProductionRoute
+  AdminReportsRoute: typeof AdminReportsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTasksRoute: typeof AdminTasksRoute
   AdminWorkflowsRoute: typeof AdminWorkflowsRoute
   AdminJobsJobIdRoute: typeof AdminJobsJobIdRoute
   AdminJobsNewRoute: typeof AdminJobsNewRoute
@@ -299,10 +399,15 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminActivityRoute: AdminActivityRoute,
+  AdminApprovalsRoute: AdminApprovalsRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDepartmentsRoute: AdminDepartmentsRoute,
   AdminEmployeesRoute: AdminEmployeesRoute,
   AdminProductionRoute: AdminProductionRoute,
+  AdminReportsRoute: AdminReportsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminTasksRoute: AdminTasksRoute,
   AdminWorkflowsRoute: AdminWorkflowsRoute,
   AdminJobsJobIdRoute: AdminJobsJobIdRoute,
   AdminJobsNewRoute: AdminJobsNewRoute,
