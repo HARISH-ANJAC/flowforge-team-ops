@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as EmployeeRouteImport } from './routes/employee'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as SupervisorRouteImport } from './routes/supervisor'
 import { Route as AdminActivityRouteImport } from './routes/admin.activity'
 import { Route as AdminApprovalsRouteImport } from './routes/admin.approvals'
@@ -24,9 +26,15 @@ import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
 import { Route as AdminWorkflowsRouteImport } from './routes/admin.workflows'
+import { Route as EmployeeHistoryRouteImport } from './routes/employee.history'
+import { Route as EmployeeJobsRouteImport } from './routes/employee.jobs'
+import { Route as SupervisorDashboardRouteImport } from './routes/supervisor.dashboard'
 import { Route as AdminJobsIndexRouteImport } from './routes/admin.jobs.index'
 import { Route as AdminJobsJobIdRouteImport } from './routes/admin.jobs.$jobId'
 import { Route as AdminJobsNewRouteImport } from './routes/admin.jobs.new'
+import { Route as EmployeeTasksIndexRouteImport } from './routes/employee.tasks.index'
+import { Route as EmployeeTasksTaskIdRouteImport } from './routes/employee.tasks.$taskId'
+import { Route as SupervisorReviewsTaskIdRouteImport } from './routes/supervisor.reviews.$taskId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +54,16 @@ const EmployeeRoute = EmployeeRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SupervisorRoute = SupervisorRouteImport.update({
@@ -103,6 +121,21 @@ const AdminWorkflowsRoute = AdminWorkflowsRouteImport.update({
   path: '/workflows',
   getParentRoute: () => AdminRoute,
 } as any)
+const EmployeeHistoryRoute = EmployeeHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => EmployeeRoute,
+} as any)
+const EmployeeJobsRoute = EmployeeJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => EmployeeRoute,
+} as any)
+const SupervisorDashboardRoute = SupervisorDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => SupervisorRoute,
+} as any)
 const AdminJobsIndexRoute = AdminJobsIndexRouteImport.update({
   id: '/jobs/',
   path: '/jobs/',
@@ -118,13 +151,30 @@ const AdminJobsNewRoute = AdminJobsNewRouteImport.update({
   path: '/jobs/new',
   getParentRoute: () => AdminRoute,
 } as any)
+const EmployeeTasksIndexRoute = EmployeeTasksIndexRouteImport.update({
+  id: '/tasks/',
+  path: '/tasks/',
+  getParentRoute: () => EmployeeRoute,
+} as any)
+const EmployeeTasksTaskIdRoute = EmployeeTasksTaskIdRouteImport.update({
+  id: '/tasks/$taskId',
+  path: '/tasks/$taskId',
+  getParentRoute: () => EmployeeRoute,
+} as any)
+const SupervisorReviewsTaskIdRoute = SupervisorReviewsTaskIdRouteImport.update({
+  id: '/reviews/$taskId',
+  path: '/reviews/$taskId',
+  getParentRoute: () => SupervisorRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
-  '/employee': typeof EmployeeRoute
+  '/employee': typeof EmployeeRouteWithChildren
   '/login': typeof LoginRoute
-  '/supervisor': typeof SupervisorRoute
+  '/notifications': typeof NotificationsRoute
+  '/profile': typeof ProfileRoute
+  '/supervisor': typeof SupervisorRouteWithChildren
   '/admin/activity': typeof AdminActivityRoute
   '/admin/approvals': typeof AdminApprovalsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
@@ -135,16 +185,24 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/workflows': typeof AdminWorkflowsRoute
+  '/employee/history': typeof EmployeeHistoryRoute
+  '/employee/jobs': typeof EmployeeJobsRoute
+  '/supervisor/dashboard': typeof SupervisorDashboardRoute
   '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
   '/admin/jobs/new': typeof AdminJobsNewRoute
+  '/employee/tasks/$taskId': typeof EmployeeTasksTaskIdRoute
+  '/supervisor/reviews/$taskId': typeof SupervisorReviewsTaskIdRoute
   '/admin/jobs/': typeof AdminJobsIndexRoute
+  '/employee/tasks/': typeof EmployeeTasksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
-  '/employee': typeof EmployeeRoute
+  '/employee': typeof EmployeeRouteWithChildren
   '/login': typeof LoginRoute
-  '/supervisor': typeof SupervisorRoute
+  '/notifications': typeof NotificationsRoute
+  '/profile': typeof ProfileRoute
+  '/supervisor': typeof SupervisorRouteWithChildren
   '/admin/activity': typeof AdminActivityRoute
   '/admin/approvals': typeof AdminApprovalsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
@@ -155,17 +213,25 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/workflows': typeof AdminWorkflowsRoute
+  '/employee/history': typeof EmployeeHistoryRoute
+  '/employee/jobs': typeof EmployeeJobsRoute
+  '/supervisor/dashboard': typeof SupervisorDashboardRoute
   '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
   '/admin/jobs/new': typeof AdminJobsNewRoute
+  '/employee/tasks/$taskId': typeof EmployeeTasksTaskIdRoute
+  '/supervisor/reviews/$taskId': typeof SupervisorReviewsTaskIdRoute
   '/admin/jobs': typeof AdminJobsIndexRoute
+  '/employee/tasks': typeof EmployeeTasksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
-  '/employee': typeof EmployeeRoute
+  '/employee': typeof EmployeeRouteWithChildren
   '/login': typeof LoginRoute
-  '/supervisor': typeof SupervisorRoute
+  '/notifications': typeof NotificationsRoute
+  '/profile': typeof ProfileRoute
+  '/supervisor': typeof SupervisorRouteWithChildren
   '/admin/activity': typeof AdminActivityRoute
   '/admin/approvals': typeof AdminApprovalsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
@@ -176,9 +242,15 @@ export interface FileRoutesById {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/workflows': typeof AdminWorkflowsRoute
+  '/employee/history': typeof EmployeeHistoryRoute
+  '/employee/jobs': typeof EmployeeJobsRoute
+  '/supervisor/dashboard': typeof SupervisorDashboardRoute
   '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
   '/admin/jobs/new': typeof AdminJobsNewRoute
+  '/employee/tasks/$taskId': typeof EmployeeTasksTaskIdRoute
+  '/supervisor/reviews/$taskId': typeof SupervisorReviewsTaskIdRoute
   '/admin/jobs/': typeof AdminJobsIndexRoute
+  '/employee/tasks/': typeof EmployeeTasksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -187,6 +259,8 @@ export interface FileRouteTypes {
     | '/admin'
     | '/employee'
     | '/login'
+    | '/notifications'
+    | '/profile'
     | '/supervisor'
     | '/admin/activity'
     | '/admin/approvals'
@@ -198,15 +272,23 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/tasks'
     | '/admin/workflows'
+    | '/employee/history'
+    | '/employee/jobs'
+    | '/supervisor/dashboard'
     | '/admin/jobs/$jobId'
     | '/admin/jobs/new'
+    | '/employee/tasks/$taskId'
+    | '/supervisor/reviews/$taskId'
     | '/admin/jobs/'
+    | '/employee/tasks/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
     | '/employee'
     | '/login'
+    | '/notifications'
+    | '/profile'
     | '/supervisor'
     | '/admin/activity'
     | '/admin/approvals'
@@ -218,15 +300,23 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/tasks'
     | '/admin/workflows'
+    | '/employee/history'
+    | '/employee/jobs'
+    | '/supervisor/dashboard'
     | '/admin/jobs/$jobId'
     | '/admin/jobs/new'
+    | '/employee/tasks/$taskId'
+    | '/supervisor/reviews/$taskId'
     | '/admin/jobs'
+    | '/employee/tasks'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/employee'
     | '/login'
+    | '/notifications'
+    | '/profile'
     | '/supervisor'
     | '/admin/activity'
     | '/admin/approvals'
@@ -238,17 +328,25 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/tasks'
     | '/admin/workflows'
+    | '/employee/history'
+    | '/employee/jobs'
+    | '/supervisor/dashboard'
     | '/admin/jobs/$jobId'
     | '/admin/jobs/new'
+    | '/employee/tasks/$taskId'
+    | '/supervisor/reviews/$taskId'
     | '/admin/jobs/'
+    | '/employee/tasks/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
-  EmployeeRoute: typeof EmployeeRoute
+  EmployeeRoute: typeof EmployeeRouteWithChildren
   LoginRoute: typeof LoginRoute
-  SupervisorRoute: typeof SupervisorRoute
+  NotificationsRoute: typeof NotificationsRoute
+  ProfileRoute: typeof ProfileRoute
+  SupervisorRoute: typeof SupervisorRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -279,6 +377,20 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/supervisor': {
@@ -358,6 +470,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminWorkflowsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/employee/history': {
+      id: '/employee/history'
+      path: '/history'
+      fullPath: '/employee/history'
+      preLoaderRoute: typeof EmployeeHistoryRouteImport
+      parentRoute: typeof EmployeeRoute
+    }
+    '/employee/jobs': {
+      id: '/employee/jobs'
+      path: '/jobs'
+      fullPath: '/employee/jobs'
+      preLoaderRoute: typeof EmployeeJobsRouteImport
+      parentRoute: typeof EmployeeRoute
+    }
+    '/supervisor/dashboard': {
+      id: '/supervisor/dashboard'
+      path: '/dashboard'
+      fullPath: '/supervisor/dashboard'
+      preLoaderRoute: typeof SupervisorDashboardRouteImport
+      parentRoute: typeof SupervisorRoute
+    }
     '/admin/jobs/': {
       id: '/admin/jobs/'
       path: '/jobs'
@@ -378,6 +511,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/jobs/new'
       preLoaderRoute: typeof AdminJobsNewRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/employee/tasks/': {
+      id: '/employee/tasks/'
+      path: '/tasks'
+      fullPath: '/employee/tasks/'
+      preLoaderRoute: typeof EmployeeTasksIndexRouteImport
+      parentRoute: typeof EmployeeRoute
+    }
+    '/employee/tasks/$taskId': {
+      id: '/employee/tasks/$taskId'
+      path: '/tasks/$taskId'
+      fullPath: '/employee/tasks/$taskId'
+      preLoaderRoute: typeof EmployeeTasksTaskIdRouteImport
+      parentRoute: typeof EmployeeRoute
+    }
+    '/supervisor/reviews/$taskId': {
+      id: '/supervisor/reviews/$taskId'
+      path: '/reviews/$taskId'
+      fullPath: '/supervisor/reviews/$taskId'
+      preLoaderRoute: typeof SupervisorReviewsTaskIdRouteImport
+      parentRoute: typeof SupervisorRoute
     }
   }
 }
@@ -416,12 +570,46 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface EmployeeRouteChildren {
+  EmployeeHistoryRoute: typeof EmployeeHistoryRoute
+  EmployeeJobsRoute: typeof EmployeeJobsRoute
+  EmployeeTasksTaskIdRoute: typeof EmployeeTasksTaskIdRoute
+  EmployeeTasksIndexRoute: typeof EmployeeTasksIndexRoute
+}
+
+const EmployeeRouteChildren: EmployeeRouteChildren = {
+  EmployeeHistoryRoute: EmployeeHistoryRoute,
+  EmployeeJobsRoute: EmployeeJobsRoute,
+  EmployeeTasksTaskIdRoute: EmployeeTasksTaskIdRoute,
+  EmployeeTasksIndexRoute: EmployeeTasksIndexRoute,
+}
+
+const EmployeeRouteWithChildren = EmployeeRoute._addFileChildren(
+  EmployeeRouteChildren,
+)
+
+interface SupervisorRouteChildren {
+  SupervisorDashboardRoute: typeof SupervisorDashboardRoute
+  SupervisorReviewsTaskIdRoute: typeof SupervisorReviewsTaskIdRoute
+}
+
+const SupervisorRouteChildren: SupervisorRouteChildren = {
+  SupervisorDashboardRoute: SupervisorDashboardRoute,
+  SupervisorReviewsTaskIdRoute: SupervisorReviewsTaskIdRoute,
+}
+
+const SupervisorRouteWithChildren = SupervisorRoute._addFileChildren(
+  SupervisorRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
-  EmployeeRoute: EmployeeRoute,
+  EmployeeRoute: EmployeeRouteWithChildren,
   LoginRoute: LoginRoute,
-  SupervisorRoute: SupervisorRoute,
+  NotificationsRoute: NotificationsRoute,
+  ProfileRoute: ProfileRoute,
+  SupervisorRoute: SupervisorRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
